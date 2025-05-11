@@ -1,0 +1,3 @@
+/Users/mariamaksikova/Documents/VSCODE/C-C++/c++/HotelSystem/build/CMakeFiles/pms_system.dir
+/Users/mariamaksikova/Documents/VSCODE/C-C++/c++/HotelSystem/build/CMakeFiles/edit_cache.dir
+/Users/mariamaksikova/Documents/VSCODE/C-C++/c++/HotelSystem/build/CMakeFiles/rebuild_cache.dir
