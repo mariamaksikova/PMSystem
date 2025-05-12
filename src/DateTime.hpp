@@ -51,9 +51,10 @@ public:
         u_int seconds = 0;
 
         char delim;
-        ss >> day >> delim;
-        ss >> month >> delim;
+
         ss >> year >> delim;
+        ss >> month >> delim;
+        ss >> day >> delim;
         ss >> hours >> delim;
         ss >> minutes >> delim;
         ss >> seconds >> delim;

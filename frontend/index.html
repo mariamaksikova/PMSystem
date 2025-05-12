@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel PMS</title>
+    <title>Система управления отелем</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -12,81 +12,82 @@
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-hotel"></i> Hotel Management System</h1>
+            <h1><i class="fas fa-hotel"></i> Система управления отелем</h1>
         </header>
 
         <div class="content">
             <div class="sidebar">
                 <nav>
                     <ul>
-                        <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-                        <li data-section="rooms"><i class="fas fa-bed"></i> Rooms</li>
-                        <li data-section="reservations"><i class="fas fa-calendar-check"></i> Reservations</li>
-                        <li data-section="guests"><i class="fas fa-users"></i> Guests</li>
+                        <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Панель
+                            управления</li>
+                        <li data-section="rooms"><i class="fas fa-bed"></i> Номера</li>
+                        <li data-section="reservations"><i class="fas fa-calendar-check"></i> Бронирования</li>
+                        <li data-section="guests"><i class="fas fa-users"></i> Гости</li>
                     </ul>
                 </nav>
             </div>
 
             <main>
                 <section id="dashboard" class="section active">
-                    <h2>Dashboard</h2>
+                    <h2>Панель управления</h2>
                     <div class="stats">
                         <div class="stat-card">
-                            <h3>Total Rooms</h3>
+                            <h3>Всего номеров</h3>
                             <p id="total-rooms">0</p>
                         </div>
                         <div class="stat-card">
-                            <h3>Available Rooms</h3>
+                            <h3>Доступные номера</h3>
                             <p id="available-rooms">0</p>
                         </div>
                         <div class="stat-card">
-                            <h3>Active Reservations</h3>
+                            <h3>Активные бронирования</h3>
                             <p id="active-reservations">0</p>
                         </div>
                     </div>
                 </section>
 
                 <section id="rooms" class="section">
-                    <h2>Room Management</h2>
+                    <h2>Управление номерами</h2>
                     <div class="room-list" id="room-list">
-                        <!-- Rooms will be loaded here -->
+                        <!-- Список номеров будет загружен здесь -->
                     </div>
                 </section>
 
                 <section id="reservations" class="section">
-                    <h2>Reservations</h2>
-                    <button id="new-reservation-btn" class="btn-primary">New Reservation</button>
+                    <h2>Бронирования</h2>
+                    <button id="new-reservation-btn" class="btn-primary">Новое бронирование</button>
                     <div class="reservation-form" id="reservation-form" style="display: none;">
-                        <h3>Create New Reservation</h3>
+                        <h3>Создать новое бронирование</h3>
                         <form id="create-reservation-form">
                             <div class="form-group">
-                                <label for="guest-id">Guest ID:</label>
+                                <label for="guest-id">ID гостя:</label>
                                 <input type="number" id="guest-id" required>
                             </div>
                             <div class="form-group">
-                                <label for="room-id">Room ID:</label>
+                                <label for="room-id">ID номера:</label>
                                 <input type="number" id="room-id" required>
                             </div>
                             <div class="form-group">
-                                <label for="checkin">Check-in:</label>
+                                <label for="checkin">Дата заезда:</label>
                                 <input type="date" id="checkin" required>
                             </div>
                             <div class="form-group">
-                                <label for="checkout">Check-out:</label>
+                                <label for="checkout">Дата выезда:</label>
                                 <input type="date" id="checkout" required>
                             </div>
-                            <button type="submit" class="btn-primary">Create</button>
+                            <button type="submit" class="btn-primary">Создать</button>
                         </form>
                     </div>
                     <div class="reservation-list" id="reservation-list">
-                        <!-- Reservations will be loaded here -->
+                        <!-- Список бронирований будет загружен здесь -->
                     </div>
                 </section>
 
                 <section id="guests" class="section">
-                    <h2>Guest Management</h2>
+                    <h2>Управление гостями</h2>
                     <div class="guest-list" id="guest-list">
-                        <!-- Guests will be loaded here -->
+                        <!-- Список гостей будет загружен здесь -->
                     </div>
                 </section>
             </main>

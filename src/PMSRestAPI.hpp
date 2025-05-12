@@ -90,7 +90,7 @@ public:
                 uint64_t room_id = body["room_id"].u();
                 std::string checkin = body["checkin"].s();
                 std::string checkout = body["checkout"].s();
-
+                std::cout << checkin << " " << checkout << std::endl;
                 DateTime checkin_date(checkin);
                 DateTime checkout_date(checkout);
                 DateTimeRange range{checkin_date, checkout_date};
