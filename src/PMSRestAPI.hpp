@@ -86,8 +86,8 @@ public:
                     return crow::response(400, "Invalid JSON");
                 }
 
-                uint64_t guest_id = body["guest_id"].u();
-                uint64_t room_id = body["room_id"].u();
+                u_int64_t guest_id = body["guest_id"].u();
+                u_int64_t room_id = body["room_id"].u();
                 std::string checkin = body["checkin"].s();
                 std::string checkout = body["checkout"].s();
                 std::cout << checkin << " " << checkout << std::endl;
@@ -105,7 +105,7 @@ public:
             } });
 
         // Отменить бронирование
-        CROW_ROUTE(app, "/api/reservations/<uint>").methods("DELETE"_method)([this](uint64_t reservation_id)
+        CROW_ROUTE(app, "/api/reservations/<uint>").methods("DELETE"_method)([this](u_int64_t reservation_id)
                                                                              {
             try {
                 manager.cancelReservation(reservation_id);

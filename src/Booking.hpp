@@ -40,7 +40,7 @@ private:
     struct TimeSlot
     {
         DateTimeRange range;
-        uint64_t reservation_id;
+        u_int64_t reservation_id;
     };
 
     u_int64_t id;
@@ -68,7 +68,7 @@ public:
         return true;
     }
 
-    Reservation book(uint64_t id, Guest *guest, DateTimeRange range)
+    Reservation book(u_int64_t id, Guest *guest, DateTimeRange range)
     {
         TimeSlot slot = {range, id};
         reservation_time.push_back(slot);
@@ -83,7 +83,7 @@ public:
     double getPrice() const { return price; }
     unsigned int getMaxGuests() const { return max_guest; }
 
-    void removeReservation(uint64_t res_id)
+    void removeReservation(u_int64_t res_id)
     {
         std::vector<TimeSlot> new_slots;
         for (auto &slot : reservation_time)

@@ -10,7 +10,7 @@ private:
     std::vector<Guest *> guests;
     std::vector<Room *> rooms;
     std::vector<Reservation *> reservations;
-    uint64_t next_reservation_id = 1;
+    u_int64_t next_reservation_id = 1;
 
 public:
     ~HotelManager()
@@ -35,8 +35,8 @@ public:
 
     // Основные операции
     Reservation *createReservation(
-        uint64_t guest_id,
-        uint64_t room_id,
+        u_int64_t guest_id,
+        u_int64_t room_id,
         const DateTimeRange &period)
     {
 
@@ -87,7 +87,7 @@ public:
         return reservation;
     }
 
-    void cancelReservation(uint64_t reservation_id)
+    void cancelReservation(u_int64_t reservation_id)
     {
         size_t index = 0;
         for (; index < reservations.size(); ++index)
