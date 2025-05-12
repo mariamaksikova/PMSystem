@@ -130,7 +130,7 @@ main {
     background-color: var(--secondary-color);
 }
 
-.room-list,
+.entity-list,
 .reservation-list,
 .guest-list {
     display: grid;

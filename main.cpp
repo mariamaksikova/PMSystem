@@ -20,7 +20,7 @@ int main()
     manager.addGuest(guest);
 
     auto room = new Room(101, 5000.0, 2);
-    manager.addRoom(room);
+    manager.addEntity(room);
 
     // Запускаем REST API
     PMSRestAPI api(manager);

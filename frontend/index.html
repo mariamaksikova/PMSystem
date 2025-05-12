@@ -21,7 +21,7 @@
                     <ul>
                         <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Панель
                             управления</li>
-                        <li data-section="rooms"><i class="fas fa-bed"></i> Номера</li>
+                        <li data-section="entities"><i class="fas fa-building"></i> Объекты бронирования</li>
                         <li data-section="reservations"><i class="fas fa-calendar-check"></i> Бронирования</li>
                         <li data-section="guests"><i class="fas fa-users"></i> Гости</li>
                     </ul>
@@ -33,12 +33,12 @@
                     <h2>Панель управления</h2>
                     <div class="stats">
                         <div class="stat-card">
-                            <h3>Всего номеров</h3>
-                            <p id="total-rooms">0</p>
+                            <h3>Всего объектов</h3>
+                            <p id="total-entities">0</p>
                         </div>
                         <div class="stat-card">
-                            <h3>Доступные номера</h3>
-                            <p id="available-rooms">0</p>
+                            <h3>Доступные объекты</h3>
+                            <p id="available-entities">0</p>
                         </div>
                         <div class="stat-card">
                             <h3>Активные бронирования</h3>
@@ -47,10 +47,10 @@
                     </div>
                 </section>
 
-                <section id="rooms" class="section">
-                    <h2>Управление номерами</h2>
-                    <div class="room-list" id="room-list">
-                        <!-- Список номеров будет загружен здесь -->
+                <section id="entities" class="section">
+                    <h2>Объекты бронирования</h2>
+                    <div class="entity-list" id="entity-list">
+                        <!-- Список объектов будет загружен здесь -->
                     </div>
                 </section>
 
@@ -65,8 +65,8 @@
                                 <input type="number" id="guest-id" required>
                             </div>
                             <div class="form-group">
-                                <label for="room-id">ID номера:</label>
-                                <input type="number" id="room-id" required>
+                                <label for="entity-id">ID объекта:</label>
+                                <input type="number" id="entity-id" required>
                             </div>
                             <div class="form-group">
                                 <label for="checkin">Дата заезда:</label>

@@ -4,25 +4,25 @@
 #include "DateTime.hpp"
 #include "Guest.hpp"
 
-class Room;
+class BookingEntity;
 
 class Reservation
 {
 private:
     u_int64_t id;
     Guest *guest;
-    Room *room;
+    BookingEntity *entity;
     DateTimeRange date_range;
 
 public:
-    Reservation(u_int64_t id, Room *room, Guest *guest, DateTimeRange date_range) : id(id), guest(guest), room(room), date_range(date_range) {};
+    Reservation(u_int64_t id, BookingEntity *entity, Guest *guest, DateTimeRange date_range) : id(id), guest(guest), entity(entity), date_range(date_range) {};
     u_int64_t getId() const
     {
         return id;
     }
-    Room *getRoom()
+    BookingEntity *getEntity()
     {
-        return room;
+        return entity;
     }
     Guest *getGuest()
     {
@@ -34,33 +34,28 @@ public:
     }
 };
 
-class Room
+class BookingEntity
 {
-private:
+protected:
     struct TimeSlot
     {
         DateTimeRange range;
         u_int64_t reservation_id;
     };
-
     u_int64_t id;
     double price;
     std::vector<TimeSlot> reservation_time;
-    unsigned int max_guest;
 
 public:
-    Room(u_int64_t id, double price, unsigned int max_guest) : id(id), price(price), max_guest(max_guest) {};
+    BookingEntity(u_int64_t id, double price) : id(id), price(price) {};
 
-    double calculate_cost(int nights)
-    {
-        return price * nights;
-    }
+    virtual double calculate_cost(int duration) = 0;
 
-    bool isAvailable(DateTimeRange date_range)
+    bool isAvailable(DateTimeRange range)
     {
         for (auto slot : reservation_time)
         {
-            if (slot.range.overlaps(date_range))
+            if (slot.range.overlaps(range))
             {
                 return false;
             }
@@ -75,14 +70,6 @@ public:
         return Reservation(id, this, guest, range);
     }
 
-    u_int64_t getId() const
-    {
-        return id;
-    }
-
-    double getPrice() const { return price; }
-    unsigned int getMaxGuests() const { return max_guest; }
-
     void removeReservation(u_int64_t res_id)
     {
         std::vector<TimeSlot> new_slots;
@@ -95,27 +82,21 @@ public:
         }
         reservation_time = new_slots;
     }
+
+    u_int64_t getId() const { return id; }
+    double getPrice() const { return price; }
 };
 
-
-class BookingEntity {
+class Room : public BookingEntity
+{
 private:
-    struct TimeSlot {
-        DateTimeRange range;
-        u_int64_t reservation_id;
-    };
+    unsigned int max_guest;
 
-    double price;
-    std::vector<TimeSlot> reservation_time;
 public:
-    BookingEntity(u_int64_t id, double price) : id(id), price(price) {};
-    
-    ~BookingEntity() {
-        for (auto slot : reservation_time) {
-            delete slot.range;
-        }
+    Room(u_int64_t id, double price, unsigned int max_guest) : BookingEntity(id, price), max_guest(max_guest) {};
+
+    double calculate_cost(int nights) override
+    {
+        return price * nights;
     }
-
-    
-
 };

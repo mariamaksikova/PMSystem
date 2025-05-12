@@ -1,4 +1,3 @@
-// PMSRestAPI.hpp
 #pragma once
 #include "HotelManager.hpp"
 #include <crow.h>
@@ -18,24 +17,24 @@ public:
         cors
             .global()
             .headers("Content-Type")
-            .methods("GET"_method, "POST"_method, "PUT"_method, "DELETE"_method);
+            .methods("GET"_method, "POST"_method, "PUT"_method, "DELETE"_method)
+            .origin("*");
     }
 
     void setupRoutes()
     {
-        // Получить список всех комнат
-        CROW_ROUTE(app, "/api/rooms")
+        // Получить список всех объектов бронирования (бывшие комнаты)
+        CROW_ROUTE(app, "/api/entities")
         ([this]
          {
-            auto rooms = this->manager.getAllRooms();
+            auto entities = this->manager.getAllRooms();
             crow::json::wvalue result;
-            result["rooms"] = crow::json::wvalue::list();
+            result["entities"] = crow::json::wvalue::list();
 
-            for (size_t i = 0; i < rooms.size(); ++i) {
-                result["rooms"][i]["id"] = rooms[i]->getId();
-                result["rooms"][i]["price"] = rooms[i]->getPrice();
-                result["rooms"][i]["max_guests"] = rooms[i]->getMaxGuests();
-                result["rooms"][i]["status"] = rooms[i]->isAvailable(DateTimeRange{DateTime(), DateTime()}) ? "available" : "occupied";
+            for (size_t i = 0; i < entities.size(); ++i) {
+                result["entities"][i]["id"] = entities[i]->getId();
+                result["entities"][i]["price"] = entities[i]->getPrice();
+                result["entities"][i]["status"] = entities[i]->isAvailable(DateTimeRange{DateTime(), DateTime()}) ? "available" : "occupied";
             }
 
             return result; });
@@ -54,6 +53,7 @@ public:
                 result["guests"][i]["last_name"] = guests[i]->getSecondName();
                 result["guests"][i]["email"] = guests[i]->getEmail();
                 result["guests"][i]["phone"] = guests[i]->getPhone();
+                result["guests"][i]["loyalty_points"] = 0; // Добавляем поле для бонусных баллов
             }
 
             return result; });
@@ -69,10 +69,10 @@ public:
             for (size_t i = 0; i < reservations.size(); ++i) {
                 result["reservations"][i]["id"] = reservations[i]->getId();
                 result["reservations"][i]["guest_id"] = reservations[i]->getGuest()->getId();
-                result["reservations"][i]["room_id"] = reservations[i]->getRoom()->getId();
+                result["reservations"][i]["entity_id"] = reservations[i]->getEntity()->getId();
                 result["reservations"][i]["checkin"] = reservations[i]->getDateRange().getStart().toString();
                 result["reservations"][i]["checkout"] = reservations[i]->getDateRange().getEnd().toString();
-                result["reservations"][i]["status"] = "active"; // Можно добавить логику определения статуса
+                result["reservations"][i]["status"] = "active";
             }
 
             return result; });
@@ -87,15 +87,15 @@ public:
                 }
 
                 u_int64_t guest_id = body["guest_id"].u();
-                u_int64_t room_id = body["room_id"].u();
+                u_int64_t entity_id = body["entity_id"].u();
                 std::string checkin = body["checkin"].s();
                 std::string checkout = body["checkout"].s();
-                std::cout << checkin << " " << checkout << std::endl;
+                
                 DateTime checkin_date(checkin);
                 DateTime checkout_date(checkout);
                 DateTimeRange range{checkin_date, checkout_date};
 
-                auto reservation = manager.createReservation(guest_id, room_id, range);
+                auto reservation = manager.createReservation(guest_id, entity_id, range);
 
                 crow::json::wvalue response;
                 response["reservation_id"] = reservation->getId();

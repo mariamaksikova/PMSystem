@@ -8,7 +8,7 @@ class HotelManager
 {
 private:
     std::vector<Guest *> guests;
-    std::vector<Room *> rooms;
+    std::vector<BookingEntity *> entities;
     std::vector<Reservation *> reservations;
     u_int64_t next_reservation_id = 1;
 
@@ -17,8 +17,8 @@ public:
     {
         for (auto g : guests)
             delete g;
-        for (auto r : rooms)
-            delete r;
+        for (auto e : entities)
+            delete e;
         for (auto res : reservations)
             delete res;
     }
@@ -28,15 +28,15 @@ public:
         guests.push_back(guest);
     }
 
-    void addRoom(Room *room)
+    void addEntity(BookingEntity *entity)
     {
-        rooms.push_back(room);
+        entities.push_back(entity);
     }
 
     // Основные операции
     Reservation *createReservation(
         u_int64_t guest_id,
-        u_int64_t room_id,
+        u_int64_t entity_id,
         const DateTimeRange &period)
     {
 
@@ -55,34 +55,34 @@ public:
             throw std::runtime_error("Guest not found");
         }
 
-        Room *room = nullptr;
-        for (size_t i = 0; i < rooms.size(); ++i)
+        BookingEntity *entity = nullptr;
+        for (size_t i = 0; i < entities.size(); ++i)
         {
-            Room *current_room = rooms[i];
-            if (current_room->getId() == room_id)
+            BookingEntity *current_entity = entities[i];
+            if (current_entity->getId() == entity_id)
             {
-                room = current_room;
+                entity = current_entity;
                 break;
             }
         }
-        if (room == nullptr)
+        if (entity == nullptr)
         {
             throw std::runtime_error("Room not found");
         }
 
-        if (!room->isAvailable(period))
+        if (!entity->isAvailable(period))
         {
             throw std::runtime_error("Room is occupied");
         }
 
         Reservation *reservation = new Reservation(
             next_reservation_id++,
-            room,
+            entity,
             guest,
             period);
 
         reservations.push_back(reservation);
-        room->book(reservation->getId(), guest, period);
+        entity->book(reservation->getId(), guest, period);
 
         return reservation;
     }
@@ -103,12 +103,12 @@ public:
             throw std::runtime_error("Reservation not found");
         }
 
-        reservations[index]->getRoom()->removeReservation(reservation_id);
+        reservations[index]->getEntity()->removeReservation(reservation_id);
         delete reservations[index];
         reservations.erase(reservations.begin() + index);
     }
 
-    std::vector<Room *> getAllRooms() const { return rooms; }
+    std::vector<BookingEntity *> getAllRooms() const { return entities; }
     std::vector<Guest *> getAllGuests() const
     {
         return guests;
