@@ -96,3 +96,26 @@ public:
         reservation_time = new_slots;
     }
 };
+
+
+class BookingEntity {
+private:
+    struct TimeSlot {
+        DateTimeRange range;
+        u_int64_t reservation_id;
+    };
+
+    double price;
+    std::vector<TimeSlot> reservation_time;
+public:
+    BookingEntity(u_int64_t id, double price) : id(id), price(price) {};
+    
+    ~BookingEntity() {
+        for (auto slot : reservation_time) {
+            delete slot.range;
+        }
+    }
+
+    
+
+};
