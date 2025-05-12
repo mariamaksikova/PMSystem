@@ -151,7 +151,6 @@ async function loadGuests() {
                 <p>ID: ${guest.id}</p>
                 <p>Email: ${guest.email}</p>
                 <p>Телефон: ${guest.phone}</p>
-                <p>Бонусные баллы: ${guest.loyalty_points || 0}</p>
             </div>
         `).join('') || '<p>Гости не найдены</p>';
     } catch (error) {
