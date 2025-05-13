@@ -100,3 +100,17 @@ public:
         return price * nights;
     }
 };
+
+class ConferenceRoom : public BookingEntity
+{
+private:
+    double square;
+
+public:
+    ConferenceRoom(u_int64_t id, double price, double square) : BookingEntity(id, price), square(square) {};
+
+    double calculate_cost(int hours) override
+    {
+        return price * hours;
+    }
+};

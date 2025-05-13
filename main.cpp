@@ -64,6 +64,12 @@ int main()
     auto room4 = new Room(104, 4500.0, 1);
     manager.addEntity(room4);
 
+    auto conference1 = new ConferenceRoom(1, 1000.0, 52);
+    manager.addEntity(conference1);
+
+    auto conference2 = new ConferenceRoom(2, 2000.0, 152);
+    manager.addEntity(conference1);
+
     // Запускаем REST API
     PMSRestAPI api(manager);
     api.setupRoutes();

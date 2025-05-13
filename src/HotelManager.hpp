@@ -90,7 +90,7 @@ public:
     void cancelReservation(u_int64_t reservation_id)
     {
         size_t index = 0;
-        for (; index < reservations.size(); ++index)
+        for (int index = 0; index < reservations.size(); ++index)
         {
             if (reservations[index]->getId() == reservation_id)
             {
